@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/12/04/image-transfer/index.html">
 <meta property="og:site_name" content="LOOKCC">
 <meta property="og:description" content="iamge style transfer这次AI轮到我分享，刚好这次任务是有关提箱风格转换的，我就分享一下这方面的几篇论文，大家一起学习一下。 论文A Neural Algorithm of Artistic Style    2015Image StyleTransfer Using Convolutional Neural Networks 2016   Perceptual Losses f">
-<meta property="og:image" content="http://yoursite.com/2017/12/04/image-transfer/1/1.PNG">
+<meta property="og:image" content="http://yoursite.com/2017/12/04/image-transfer/1.PNG">
 <meta property="og:image" content="http://yoursite.com/2017/12/04/image-transfer/1/2.PNG">
 <meta property="og:image" content="http://yoursite.com/2017/12/04/image-transfer/1/f.PNG">
 <meta property="og:image" content="http://yoursite.com/2017/12/04/image-transfer/1/c.PNG">
@@ -44,11 +44,11 @@
 <meta property="og:image" content="http://yoursite.com/2017/12/04/image-transfer/4/d.PNG">
 <meta property="og:image" content="http://yoursite.com/2017/12/04/image-transfer/4/s.PNG">
 <meta property="og:image" content="http://yoursite.com/2017/12/04/image-transfer/4/ob.PNG">
-<meta property="og:updated_time" content="2017-12-03T19:19:58.712Z">
+<meta property="og:updated_time" content="2017-12-03T19:55:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="image transfer">
 <meta name="twitter:description" content="iamge style transfer这次AI轮到我分享，刚好这次任务是有关提箱风格转换的，我就分享一下这方面的几篇论文，大家一起学习一下。 论文A Neural Algorithm of Artistic Style    2015Image StyleTransfer Using Convolutional Neural Networks 2016   Perceptual Losses f">
-<meta name="twitter:image" content="http://yoursite.com/2017/12/04/image-transfer/1/1.PNG">
+<meta name="twitter:image" content="http://yoursite.com/2017/12/04/image-transfer/1.PNG">
   
     <link rel="alternative" href="/atom.xml" title="LOOKCC" type="application/atom+xml">
   
@@ -200,7 +200,7 @@
 <h2 id="论文"><a href="#论文" class="headerlink" title="论文"></a>论文</h2><p>A Neural Algorithm of Artistic Style    2015<br>Image StyleTransfer Using Convolutional Neural Networks 2016  </p>
 <p>Perceptual Losses for Real-Time Style Transfer and Super-Resolution 2016<br>Texture Networks: Feed-forward Synthesis of Textures and Stylized Images  2016  </p>
 <p>Deep Photo Style Transfer  2017<br>上面是这几年中在这方面比较重要的几篇论文，我把它们分成三个部分，首先是前两篇，他们是同样的人写的，区别是第一篇不详细，第二篇比较详细。之后的两篇是对第一篇的方法的改进，大大加快了出图的时间，最后一篇是解决原来的方法出的图想画的问题的，具体的实现方法后面会讲。</p>
-<h2 id="A-Neural-Algorithm-of-Artistic-Style-2015"><a href="#A-Neural-Algorithm-of-Artistic-Style-2015" class="headerlink" title="A Neural Algorithm of Artistic Style    2015"></a>A Neural Algorithm of Artistic Style    2015</h2><h2 id="Image-StyleTransfer-Using-Convolutional-Neural-Networks-2016"><a href="#Image-StyleTransfer-Using-Convolutional-Neural-Networks-2016" class="headerlink" title="Image StyleTransfer Using Convolutional Neural Networks 2016"></a>Image StyleTransfer Using Convolutional Neural Networks 2016</h2><p><img src="1/1.PNG" alt=""><br><img src="1/2.PNG" alt=""></p>
+<h2 id="A-Neural-Algorithm-of-Artistic-Style-2015"><a href="#A-Neural-Algorithm-of-Artistic-Style-2015" class="headerlink" title="A Neural Algorithm of Artistic Style    2015"></a>A Neural Algorithm of Artistic Style    2015</h2><h2 id="Image-StyleTransfer-Using-Convolutional-Neural-Networks-2016"><a href="#Image-StyleTransfer-Using-Convolutional-Neural-Networks-2016" class="headerlink" title="Image StyleTransfer Using Convolutional Neural Networks 2016"></a>Image StyleTransfer Using Convolutional Neural Networks 2016</h2><p><img src="1.PNG" alt=""><br><img src="1/2.PNG" alt=""></p>
 <h3 id="定义输入和输出"><a href="#定义输入和输出" class="headerlink" title="定义输入和输出"></a>定义输入和输出</h3><p>前面说过，这两篇讲的是一个东西，只是15年的时候他们的paper讲的不够清楚，在16年他们又发了一篇用来详细的叙述他们的模型。<br>他们的模型是这样的，首先是输入，输入是两张图片，一张为content，一张为style，即一张为待优化的内容图片，一般是一张照片；另外一张为风格图片，用来体现纹理，一般是一张画。（严格来说应该还有一张图片，是一张用来初始化的噪声图片，不过经过他们的实验，使用style或者content或者噪声图片都可以达到基本相同的结果）接下来是输出，输出就是一张图片，这张图片在内容上像content图片，在风格上像style图片。</p>
 <h3 id="内容损失函数"><a href="#内容损失函数" class="headerlink" title="内容损失函数"></a>内容损失函数</h3><p><img src="1/f.PNG" alt=""><br>先来看这个东西，我们定义这个为第l层卷积，第i个filter，第j个位置的数字，这里第i个filter应该是一个m×n的二维的一个矩阵，j应该是指将这个reshape为一个行向量（或者一个列向量）的位置j。明白了这个的意思后，我们来看代价函数。<br><img src="1/c.PNG" alt=""><br>这里的P是content图像，F是正在优化的图像。很明显这是用的欧式距离。将其求导并加以激活函数可以得到下面的式子。<br><img src="1/a.PNG" alt=""></p>
 <h3 id="风格损失函数"><a href="#风格损失函数" class="headerlink" title="风格损失函数"></a>风格损失函数</h3><h4 id="Gram矩阵"><a href="#Gram矩阵" class="headerlink" title="Gram矩阵"></a>Gram矩阵</h4><p>首先我们需要讲一下这个我们该如何描述风格这个东西，这个时候我们就需要用到这个叫做Gram的矩阵，先看一下G的定义<br><img src="1/g.PNG" alt=""><br>其中关于F的那三个位置的信息和上面的是一样的，那么这个G就表示在第l卷基层，第i个filter和第j个filter的对应位置的乘积的和，换句话说就是把filter化为一个行向量然后做内积。那么可以想象，这个描述的不就是不同的filter之间的关系么？而而这些不同的关系中就可以理解为蕴含着纹理的信息。</p>
