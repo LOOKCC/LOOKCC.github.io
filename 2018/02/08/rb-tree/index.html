@@ -43,7 +43,7 @@
     
     <title>
         
-            learn_tensorflow-3 | 
+            rb-tree | 
         
         LOOKCC
     </title>
@@ -54,7 +54,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="">
-    <meta name="keywords" content=",机器学习">
+    <meta name="keywords" content=",算法和数据结构">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -215,7 +215,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="LOOKCC">
-    <meta name="msapplication-starturl" content="http://yoursite.com/2017/12/23/learn-tensorflow-3/">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2018/02/08/rb-tree/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="LOOKCC">
@@ -230,16 +230,16 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://yoursite.com/2017/12/23/learn-tensorflow-3/">
+    <meta property="og:url" content="http://yoursite.com/2018/02/08/rb-tree/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="learn_tensorflow-3 | LOOKCC">
+    <meta property="og:title" content="rb-tree | LOOKCC">
     <meta property="og:image" content="/img/favicon.png">
     <meta property="og:description" content="">
-    <meta property="og:article:tag" content="机器学习"> 
+    <meta property="og:article:tag" content="算法和数据结构"> 
 
     
-        <meta property="article:published_time" content="Sat Dec 23 2017 02:53:59 GMT+0800">
-        <meta property="article:modified_time" content="Sat Dec 23 2017 07:01:43 GMT+0800">
+        <meta property="article:published_time" content="Thu Feb 08 2018 00:00:30 GMT+0800">
+        <meta property="article:modified_time" content="Thu Feb 08 2018 04:14:08 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -247,7 +247,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://yoursite.com/2017/12/23/learn-tensorflow-3/index.html" />
+        <link rel="canonical" href="http://yoursite.com/2018/02/08/rb-tree/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -259,10 +259,10 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "http://yoursite.com/2017/12/23/learn-tensorflow-3/index.html",
-    "headline": "learn_tensorflow-3",
-    "datePublished": "Sat Dec 23 2017 02:53:59 GMT+0800",
-    "dateModified": "Sat Dec 23 2017 07:01:43 GMT+0800",
+    "mainEntityOfPage": "http://yoursite.com/2018/02/08/rb-tree/index.html",
+    "headline": "rb-tree",
+    "datePublished": "Thu Feb 08 2018 00:00:30 GMT+0800",
+    "dateModified": "Thu Feb 08 2018 04:14:08 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "LOOKCC",
@@ -280,7 +280,7 @@
             "url": "/img/favicon.png"
         }
     },
-    "keywords": ",机器学习",
+    "keywords": ",算法和数据结构",
     "description": "",
 }
 </script>
@@ -346,7 +346,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#tensorflow学习心得3-实战MNIST"><span class="post-toc-number">1.</span> <span class="post-toc-text">tensorflow学习心得3-实战MNIST</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#数据集介绍"><span class="post-toc-number">2.</span> <span class="post-toc-text">数据集介绍</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#模型介绍"><span class="post-toc-number">3.</span> <span class="post-toc-text">模型介绍</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#开始构建我们的网络"><span class="post-toc-number">4.</span> <span class="post-toc-text">开始构建我们的网络</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#导入数据"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">导入数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#图构建"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">图构建</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#会话"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">会话</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#检测"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">检测</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总的代码"><span class="post-toc-number">5.</span> <span class="post-toc-text">总的代码</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#rb-tree"><span class="post-toc-number">1.</span> <span class="post-toc-text">rb-tree</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义和性质"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">定义和性质</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么红黑树是近平衡的"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">为什么红黑树是近平衡的</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#拓展"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">拓展</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -378,7 +378,7 @@
         
     
             <p class="article-headline-p">
-                learn_tensorflow-3
+                rb-tree
             </p>
         </div>
 
@@ -397,7 +397,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>LOOKCC</strong>
-        <span>12月 23, 2017</span>
+        <span>2月 08, 2018</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -421,7 +421,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/机器学习/">机器学习</a>
+        <a class="post_tag-link" href="/tags/算法和数据结构/">算法和数据结构</a>
     </ul>
     
 
@@ -438,7 +438,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=learn_tensorflow-3&url=http://yoursite.com/2017/12/23/learn-tensorflow-3/index.html&pic=http://yoursite.com/img/favicon.png&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=rb-tree&url=http://yoursite.com/2018/02/08/rb-tree/index.html&pic=http://yoursite.com/img/favicon.png&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -447,7 +447,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=learn_tensorflow-3&url=http://yoursite.com/2017/12/23/learn-tensorflow-3/index.html&via=LOOKCC" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=rb-tree&url=http://yoursite.com/2018/02/08/rb-tree/index.html&via=LOOKCC" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -456,7 +456,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/12/23/learn-tensorflow-3/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/02/08/rb-tree/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -465,7 +465,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/12/23/learn-tensorflow-3/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2018/02/08/rb-tree/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -490,21 +490,11 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h1 id="tensorflow学习心得3-实战MNIST"><a href="#tensorflow学习心得3-实战MNIST" class="headerlink" title="tensorflow学习心得3-实战MNIST"></a>tensorflow学习心得3-实战MNIST</h1><p>前两篇讲的都比较笼统，只是大致介绍了tensorflow，但并没有具体讲怎么用，这个一次就参照官网上的教程，来使用minst进行实战。</p>
-<h1 id="数据集介绍"><a href="#数据集介绍" class="headerlink" title="数据集介绍"></a>数据集介绍</h1><p>这是一个很简单的手写数字识别的数据集，大小为28*28，我们的任务就是分辨出上面写的是数字几，虽然图像问题使用CNN会比较好，但是因为数据集很简单，所以我们可以使用一个很简单的感知机模型了来完成这个分类任务。CNN将在下次的cifar10中讲解。</p>
-<h1 id="模型介绍"><a href="#模型介绍" class="headerlink" title="模型介绍"></a>模型介绍</h1><p>每一张图片，我们将它化成行向量，就是长度为784的行向量，这样的数据一共有55000张，所以我们的输入就是一个[55000,784]的矩阵（或者说是一个张量)，而对于每张图片，他将有10类(0-9)，是那个数字的位置为一，其他的位置为0，比如2就是[0,0,1,0,0,0,0,0,0,0]，那么，我们的输出就是[55000,10]。我们按照官网上的模型，那么就是output = softmax(W*input + b) 我们的W是一个[784,10]的矩阵，b是一个[10,1]的矩阵（或者说是一个列向量）。</p>
-<h1 id="开始构建我们的网络"><a href="#开始构建我们的网络" class="headerlink" title="开始构建我们的网络"></a>开始构建我们的网络</h1><h2 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h2><p>因为MNIST是一个很出名的数据集，所以tensorflow的官方的包里就有这个，我们直接使用它包里的导入.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from tensorflow.examples.tutorials.mnist import input_data</span><br><span class="line">mnist = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)</span><br></pre></td></tr></table></figure></p>
-<p>这段代码会在你执行的时候去下载相关的数据集  </p>
-<h2 id="图构建"><a href="#图构建" class="headerlink" title="图构建"></a>图构建</h2><p>接下来是相关的变量的定义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line">x = tf.placeholder(tf.float32, [None, 784])</span><br><span class="line">W = tf.Variable(tf.zeros([784, 10]))</span><br><span class="line">b = tf.Variable(tf.zeros([10]))</span><br><span class="line">y_ = tf.placeholder(tf.float32, [None, 10])</span><br></pre></td></tr></table></figure></p>
-<p>这里的x和y<em> 就是我们的input和output，可以看出，他们和我们的定义的是一样的，只是将那里的55000换成了None，因为我们的训练集的大小是可以改变的。之后的w和b就和我们模型中叙述的一模一样了，要注意w和b是Variable类型的，x和y</em>是先创建了一个占位符。<br>之后是我们的计算方法，也就是Operator<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y = tf.nn.softmax(tf.matmul(x, W) + b)</span><br></pre></td></tr></table></figure></p>
-<p>下来是优化方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))</span><br><span class="line">train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)</span><br></pre></td></tr></table></figure></p>
-<p>先定义损失，然后可选择优化方法，优化刚刚定义的损失.</p>
-<h2 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h2><p>接先来进入最重要的部分，进入我们的图和和会话<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.InteractiveSession()</span><br><span class="line">tf.global_variables_initializer().run()</span><br><span class="line">for _ in range(1000):</span><br><span class="line">    batch_xs, batch_ys = mnist.train.next_batch(100)</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x: batch_xs, y_: batch_ys&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>首先告诉它，我们直接使用用于交互上下文的会话，这里的交互上下文的意思就像python那样，但这是一个用于临时的交互，并不是正式的写法。（下面我将给出一个正式一些的写法。)之后初始化参数，然后迭代训练。<br>下面是比较正式的写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line">for _ in range(1000):</span><br><span class="line">    batch_xs, batch_ys = mnist.train.next_batch(100)</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x: batch_xs, y_: batch_ys&#125;)</span><br><span class="line">sess.close()</span><br></pre></td></tr></table></figure></p>
-<p>但是，为了防止我们忘记关掉sess，还有一种写法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">with tf.Session() as sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    for _ in range(1000):</span><br><span class="line">        batch_xs, batch_ys = mnist.train.next_batch(100)</span><br><span class="line">        sess.run(train_step, feed_dict=&#123;x: batch_xs, y_: batch_ys&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>其中最后一种比较常用一些。</p>
-<h2 id="检测"><a href="#检测" class="headerlink" title="检测"></a>检测</h2><p>优化部分已经解决了，那么下面我们要解决的就是检测问题，我们要证明我们训练的结果是对的，也就是说我们要把我们的训练好的模型放在测试集上跑一跑，看看效果。<br>具体的代码就是这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">correct_prediction = tf.equal(tf.arg_max(y, 1), tf.arg_max(y_, 1))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, &quot;float&quot;))</span><br></pre></td></tr></table></figure></p>
-<h1 id="总的代码"><a href="#总的代码" class="headerlink" title="总的代码"></a>总的代码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line">from tensorflow.examples.tutorials.mnist import input_data</span><br><span class="line">mnist = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)</span><br><span class="line">x = tf.placeholder(tf.float32, [None, 784])</span><br><span class="line">W = tf.Variable(tf.zeros([784, 10]))</span><br><span class="line">b = tf.Variable(tf.zeros([10]))</span><br><span class="line">y_ = tf.placeholder(tf.float32, [None, 10])</span><br><span class="line">y = tf.nn.softmax(tf.matmul(x, W) + b)</span><br><span class="line">cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))</span><br><span class="line">train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)</span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    for _ in range(1000):</span><br><span class="line">        batch_xs, batch_ys = mnist.train.next_batch(100)</span><br><span class="line">        sess.run(train_step, feed_dict=&#123;x: batch_xs, y_: batch_ys&#125;)</span><br><span class="line">correct_prediction = tf.equal(tf.arg_max(y, 1), tf.arg_max(y_, 1))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, &quot;float&quot;))</span><br></pre></td></tr></table></figure>
+        <h1 id="rb-tree"><a href="#rb-tree" class="headerlink" title="rb-tree"></a>rb-tree</h1><p>早就听说红黑树的大名，不过还没有实现过，这次趁着数据结构的课设要实现set，就实现一下红黑树。</p>
+<h2 id="定义和性质"><a href="#定义和性质" class="headerlink" title="定义和性质"></a>定义和性质</h2><p>红黑树是一种自平衡的二叉树，查找，删除，插入的时间复杂度都是log(n).<br>下面是红黑树需要满足的要求：<br>１．节点是红色或黑色。<br>２．根是黑色。　<br>３．所有叶子都是黑色（叶子是NIL节点）。　<br>４．每个红色节点必须有两个黑色的子节点。（从每个叶子到根的所有路径上不能有两个连续的红色节点。）　　<br>５．从任一节点到其每个叶子的所有简单路径都包含相同数目的黑色节点。  </p>
+<h2 id="为什么红黑树是近平衡的"><a href="#为什么红黑树是近平衡的" class="headerlink" title="为什么红黑树是近平衡的"></a>为什么红黑树是近平衡的</h2><p>我们可以从上面的定义通过不是很严禁的推理，或者说是我自己的理解推出一些结论。首先我们这样想，只看最后的一条，因为对任何的节点都需要使其不论走哪一条路，到叶子节点所以经过的黑色的节点的数量是一样的，所以我们先假设，这棵树是全黑的，那么按照性质描述的，这棵树应该是一个满的二叉树，也就是有2^n-1个节点的那种，并且对任何的节点，它的的左右子树一定是对称的，这个由节点全黑和第五条性质就可以很明显的看出。接下来我们要做的就是向里面添加红色的节点，并且尽可能破坏这棵树的平衡，这里的平衡可以理解为这棵树的左右子树的高度差，也就是我们要使这两课树的高度差最大，那么我们就要只在其中一边加入红的节点(这里以左边为例，右边一样)，另一边不变，但是根据4，红色的两个子节点必须是黑的，所以我们只能在左子树隔一行插入一行红色，那么最后左边的高度就是右边的两倍了，并且左边已经不能再高了。经过上面不严谨的推理，我们就可以说，红黑树是一个左右子树中高那一个不会比矮的哪一个高出一倍的树。虽然相对于AVL的相差不超过二要宽一些，但是在时间复杂度的数量级上是不差的。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>这个，网上已经有很多人实现了，就不细写了，有想看实现的可以去看我的github.　　</p>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><p>其实当我们弄懂了红黑树的原理之后，我们可以很简单的模仿红黑树的定义实现一个长的一部分的子树的高度小于等于短的树的3倍的4倍的等等很多的类似红黑树的树。其实关于红黑树的最重要的是它的两个性质，首先是关于红的子孩子必须是黑，另一个是第五条，保证路上的黑色是相等的。</p>
 
         
     
@@ -525,21 +515,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/12/23/learn-tensorflow-4/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2017/12/20/learn-tensorflow-2/" id="post_nav-older" class="next-content">
+        <a href="/2018/01/30/pytorch-cv-模板/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
