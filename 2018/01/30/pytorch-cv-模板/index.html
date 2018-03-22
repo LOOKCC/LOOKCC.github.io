@@ -81,6 +81,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -491,10 +496,219 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h1 id="Pytorch-模板"><a href="#Pytorch-模板" class="headerlink" title="Pytorch 模板"></a>Pytorch 模板</h1><p>pytorch在处理图像问题的时候是有一定的模板的，照着这些模板，可以很快速的写出一个cnn的模型，这次就写一个博客来存一下这个模板。</p>
-<h2 id="utils"><a href="#utils" class="headerlink" title="utils"></a>utils</h2><p>首先是关于data的处理，因为是cv问题，所以一般处理的都是图像，下面这个是pytorch的官网的的方式，在的官方的推荐里面，比如cifar10 的代码里面都是这样使用的。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.utils.data <span class="keyword">as</span> Data</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms,datasets</span><br><span class="line"><span class="comment"># 首先是定义自己的transform 可以对图片进行裁剪变换等等，相应的操作可以看他们的官网的文档，http://pytorch.org/docs/master/torchvision/transforms.html</span></span><br><span class="line"><span class="comment"># 这里特别要注意这要求是PIL导进去的image，其他的格式是不行的。</span></span><br><span class="line">crop_transform = transforms.Compose([</span><br><span class="line">    transforms.Scale(<span class="number">256</span>),</span><br><span class="line">    transforms.RandomCrop(<span class="number">224</span>),</span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">])</span><br><span class="line"><span class="comment"># 之后定义自己的类，这个类继承 它的Dataset类，里面至少要重载三个的方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ImageLoader</span><span class="params">(Data.Dataset)</span>:</span></span><br><span class="line">    <span class="comment"># 初始化类</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, image_list, root_dir, transform)</span>:</span></span><br><span class="line">        self.image_list = image_list</span><br><span class="line">        self.root_dir = root_dir</span><br><span class="line">        self.transform = transform</span><br><span class="line">    <span class="comment"># 获得长度，重载后就可以使用len() 这个方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> len(self.image_list)</span><br><span class="line">    <span class="comment"># 最重要的一个类，这个类是用来迭代的，也就是说，从在这个类之后，就可以使用[] 操作了，同时也要在这个列里面实现你要对图片的各种操作，或者说是对数据的处理</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, idx)</span>:</span></span><br><span class="line">        <span class="comment"># 灰度 剪切 前面定义的transform 等等</span></span><br><span class="line">        <span class="keyword">return</span> data_set, label_set</span><br><span class="line"><span class="comment"># 最后是数据打包的操作，先定义所有的数据或者说是对数据的操作，然后进行batch打包</span></span><br><span class="line">all_data = ImageLoader(image_list,dir,crop_transform)</span><br><span class="line">    loader = Data.DataLoader(</span><br><span class="line">        dataset=all_data,     </span><br><span class="line">        batch_size = m_batch_size,     </span><br><span class="line">        shuffle=<span class="keyword">True</span>,              </span><br><span class="line">        num_workers=<span class="number">2</span>,             </span><br><span class="line">    )</span><br></pre></td></tr></table></figure></p>
-<h2 id="net"><a href="#net" class="headerlink" title="net"></a>net</h2><p>接下来是网络部分，这部分有两个方法，第一种是清楚直观的方法，就是全部写出来，比如下面这样，是一个VGG19.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(Net, self).__init__()</span><br><span class="line">        self.conv1_1 = nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv1_2 = nn.Conv2d(<span class="number">64</span>, <span class="number">64</span>, <span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">        self.pool1 = nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">        self.conv2_1 = nn.Conv2d(<span class="number">64</span>, <span class="number">128</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv2_2 = nn.Conv2d(<span class="number">128</span>, <span class="number">128</span>, <span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">        self.conv2_3 = nn.Conv2d(<span class="number">128</span>, <span class="number">128</span>, <span class="number">3</span>, padding=<span class="number">1</span>)  </span><br><span class="line">        self.pool2 = nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">        self.conv3_1 = nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv3_2 = nn.Conv2d(<span class="number">256</span>, <span class="number">256</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv3_3 = nn.Conv2d(<span class="number">256</span>, <span class="number">256</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv3_4 = nn.Conv2d(<span class="number">256</span>, <span class="number">256</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.pool3 = nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">        self.conv4_1 = nn.Conv2d(<span class="number">256</span>, <span class="number">512</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv4_2 = nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv4_3 = nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv4_4 = nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.pool4 = nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">        self.conv5_1 = nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv5_2 = nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv5_3 = nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.conv5_4 = nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>, padding=<span class="number">1</span>) </span><br><span class="line">        self.pool5 = nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">        self.relu = nn.ReLU(inplace=<span class="keyword">True</span>)</span><br><span class="line">        self.classifier = nn.Linear(<span class="number">512</span>,<span class="number">10</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        x = self.conv1_1(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv1_2(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.pool1(x)</span><br><span class="line">        x = self.conv2_1(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv2_2(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.pool2(x)</span><br><span class="line">        x = self.conv3_1(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv3_2(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv3_3(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv3_4(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.pool3(x)</span><br><span class="line">        x = self.conv4_1(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv4_2(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv4_3(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv4_4(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.pool4(x)</span><br><span class="line">        x = self.conv5_1(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv5_2(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv5_3(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv5_4(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.pool5(x)</span><br><span class="line">        x = x.view(<span class="number">-1</span>, <span class="number">512</span>)</span><br><span class="line">        x = self.classifier(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure></p>
-<p>但是像上面这样的话，又太过繁琐，还有就是像pytorch官网的那样的，这里是链接<a href="https://github.com/pytorch/vision/blob/master/torchvision/models/vgg.py" target="_blank" rel="noopener">https://github.com/pytorch/vision/blob/master/torchvision/models/vgg.py</a><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VGG</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, features, num_classes=<span class="number">1000</span>, init_weights=True)</span>:</span></span><br><span class="line">        super(VGG, self).__init__()</span><br><span class="line">        self.features = features</span><br><span class="line">        self.classifier = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">512</span> * <span class="number">7</span> * <span class="number">7</span>, <span class="number">4096</span>),</span><br><span class="line">            nn.ReLU(<span class="keyword">True</span>),</span><br><span class="line">            nn.Dropout(),</span><br><span class="line">            nn.Linear(<span class="number">4096</span>, <span class="number">4096</span>),</span><br><span class="line">            nn.ReLU(<span class="keyword">True</span>),</span><br><span class="line">            nn.Dropout(),</span><br><span class="line">            nn.Linear(<span class="number">4096</span>, num_classes),</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">if</span> init_weights:</span><br><span class="line">            self._initialize_weights()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        x = self.features(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>), <span class="number">-1</span>)</span><br><span class="line">        x = self.classifier(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_initialize_weights</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> self.modules():</span><br><span class="line">            <span class="keyword">if</span> isinstance(m, nn.Conv2d):</span><br><span class="line">                n = m.kernel_size[<span class="number">0</span>] * m.kernel_size[<span class="number">1</span>] * m.out_channels</span><br><span class="line">                m.weight.data.normal_(<span class="number">0</span>, math.sqrt(<span class="number">2.</span> / n))</span><br><span class="line">                <span class="keyword">if</span> m.bias <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">                    m.bias.data.zero_()</span><br><span class="line">            <span class="keyword">elif</span> isinstance(m, nn.BatchNorm2d):</span><br><span class="line">                m.weight.data.fill_(<span class="number">1</span>)</span><br><span class="line">                m.bias.data.zero_()</span><br><span class="line">            <span class="keyword">elif</span> isinstance(m, nn.Linear):</span><br><span class="line">                m.weight.data.normal_(<span class="number">0</span>, <span class="number">0.01</span>)</span><br><span class="line">                m.bias.data.zero_()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_layers</span><span class="params">(cfg, batch_norm=False)</span>:</span></span><br><span class="line">    layers = []</span><br><span class="line">    in_channels = <span class="number">3</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> cfg:</span><br><span class="line">        <span class="keyword">if</span> v == <span class="string">'M'</span>:</span><br><span class="line">            layers += [nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            conv2d = nn.Conv2d(in_channels, v, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> batch_norm:</span><br><span class="line">                layers += [conv2d, nn.BatchNorm2d(v), nn.ReLU(inplace=<span class="keyword">True</span>)]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                layers += [conv2d, nn.ReLU(inplace=<span class="keyword">True</span>)]</span><br><span class="line">            in_channels = v</span><br><span class="line">    <span class="keyword">return</span> nn.Sequential(*layers)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cfg = &#123;</span><br><span class="line">    <span class="string">'A'</span>: [<span class="number">64</span>, <span class="string">'M'</span>, <span class="number">128</span>, <span class="string">'M'</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>],</span><br><span class="line">    <span class="string">'B'</span>: [<span class="number">64</span>, <span class="number">64</span>, <span class="string">'M'</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="string">'M'</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>],</span><br><span class="line">    <span class="string">'D'</span>: [<span class="number">64</span>, <span class="number">64</span>, <span class="string">'M'</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="string">'M'</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>],</span><br><span class="line">    <span class="string">'E'</span>: [<span class="number">64</span>, <span class="number">64</span>, <span class="string">'M'</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="string">'M'</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>],</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vgg19</span><span class="params">(pretrained=False, **kwargs)</span>:</span></span><br><span class="line">    <span class="string">"""VGG 19-layer model (configuration "E")</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        pretrained (bool): If True, returns a model pre-trained on ImageNet</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> pretrained:</span><br><span class="line">        kwargs[<span class="string">'init_weights'</span>] = <span class="keyword">False</span></span><br><span class="line">    model = VGG(make_layers(cfg[<span class="string">'E'</span>]), **kwargs)</span><br><span class="line">    <span class="keyword">if</span> pretrained:</span><br><span class="line">        model.load_state_dict(model_zoo.load_url(model_urls[<span class="string">'vgg19'</span>]))</span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure></p>
-<h2 id="train"><a href="#train" class="headerlink" title="train"></a>train</h2><p>最后就是train了，这个也是都十分固定的，基本就是导入数据，定义优化方法和网络，然后开始按照epoch，最重要的是在循环中的关于loss的定义。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">import</span> net</span><br><span class="line"><span class="keyword">import</span> loaddata</span><br><span class="line"></span><br><span class="line">dir = <span class="string">'./VOCdevkit/VOC2012/JPEGImages/'</span></span><br><span class="line">learning_rate = <span class="number">0.1</span></span><br><span class="line">epoch = <span class="number">1000</span></span><br><span class="line">use_cuda = torch.cuda.is_available()</span><br><span class="line">filenames = loaddata.getdir(<span class="number">0</span>,<span class="number">10</span>)</span><br><span class="line">loader = loaddata.dataloader(filenames,dir,<span class="number">5</span>)</span><br><span class="line">print(<span class="string">'load ok'</span>)</span><br><span class="line">colornet = net.ColorNet()</span><br><span class="line"><span class="keyword">if</span> use_cuda:</span><br><span class="line">    colornet = colornet.cuda() </span><br><span class="line">mes_loss = nn.MSELoss()</span><br><span class="line">optimizer = optim.Adam(colornet.parameters(),lr = learning_rate)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(epoch):</span><br><span class="line">    <span class="keyword">for</span> batch_idx,(inputs,targets,origin) <span class="keyword">in</span> enumerate(loader):</span><br><span class="line">        <span class="keyword">if</span> use_cuda:</span><br><span class="line">            inputs,targets = inputs.cuda(), targets.cuda()</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        inputs = Variable(inputs)</span><br><span class="line">        targets = Variable(targets)</span><br><span class="line">        outputs = colornet(inputs)</span><br><span class="line">        loss = mes_loss(outputs,targets) </span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line">    <span class="keyword">if</span> i%<span class="number">10</span> == <span class="number">0</span>:</span><br><span class="line">        print(str(i+<span class="number">1</span>) + <span class="string">' loss: '</span>+str(loss))</span><br></pre></td></tr></table></figure></p>
+<h2 id="utils"><a href="#utils" class="headerlink" title="utils"></a>utils</h2><p>首先是关于data的处理，因为是cv问题，所以一般处理的都是图像，下面这个是pytorch的官网的的方式，在的官方的推荐里面，比如cifar10 的代码里面都是这样使用的。</p>
+<pre><code class="python">import torch
+import torch.utils.data as Data
+from torchvision import transforms,datasets
+# 首先是定义自己的transform 可以对图片进行裁剪变换等等，相应的操作可以看他们的官网的文档，http://pytorch.org/docs/master/torchvision/transforms.html
+# 这里特别要注意这要求是PIL导进去的image，其他的格式是不行的。
+crop_transform = transforms.Compose([
+    transforms.Scale(256),
+    transforms.RandomCrop(224),
+    transforms.ToTensor(),
+])
+# 之后定义自己的类，这个类继承 它的Dataset类，里面至少要重载三个的方法
+class ImageLoader(Data.Dataset):
+    # 初始化类
+    def __init__(self, image_list, root_dir, transform):
+        self.image_list = image_list
+        self.root_dir = root_dir
+        self.transform = transform
+    # 获得长度，重载后就可以使用len() 这个方法
+    def __len__(self):
+        return len(self.image_list)
+    # 最重要的一个类，这个类是用来迭代的，也就是说，从在这个类之后，就可以使用[] 操作了，同时也要在这个列里面实现你要对图片的各种操作，或者说是对数据的处理
+    def __getitem__(self, idx):
+        # 灰度 剪切 前面定义的transform 等等
+        return data_set, label_set
+# 最后是数据打包的操作，先定义所有的数据或者说是对数据的操作，然后进行batch打包
+all_data = ImageLoader(image_list,dir,crop_transform)
+    loader = Data.DataLoader(
+        dataset=all_data,     
+        batch_size = m_batch_size,     
+        shuffle=True,              
+        num_workers=2,             
+    )
+</code></pre>
+<h2 id="net"><a href="#net" class="headerlink" title="net"></a>net</h2><p>接下来是网络部分，这部分有两个方法，第一种是清楚直观的方法，就是全部写出来，比如下面这样，是一个VGG19.</p>
+<pre><code class="py">class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.conv1_1 = nn.Conv2d(3, 64, 3, padding=1) 
+        self.conv1_2 = nn.Conv2d(64, 64, 3, padding=1)
+        self.pool1 = nn.MaxPool2d(2,2)
+        self.conv2_1 = nn.Conv2d(64, 128, 3, padding=1) 
+        self.conv2_2 = nn.Conv2d(128, 128, 3, padding=1)
+        self.conv2_3 = nn.Conv2d(128, 128, 3, padding=1)  
+        self.pool2 = nn.MaxPool2d(2,2)
+        self.conv3_1 = nn.Conv2d(128, 256, 3, padding=1) 
+        self.conv3_2 = nn.Conv2d(256, 256, 3, padding=1) 
+        self.conv3_3 = nn.Conv2d(256, 256, 3, padding=1) 
+        self.conv3_4 = nn.Conv2d(256, 256, 3, padding=1) 
+        self.pool3 = nn.MaxPool2d(2,2)
+        self.conv4_1 = nn.Conv2d(256, 512, 3, padding=1) 
+        self.conv4_2 = nn.Conv2d(512, 512, 3, padding=1) 
+        self.conv4_3 = nn.Conv2d(512, 512, 3, padding=1) 
+        self.conv4_4 = nn.Conv2d(512, 512, 3, padding=1) 
+        self.pool4 = nn.MaxPool2d(2,2)
+        self.conv5_1 = nn.Conv2d(512, 512, 3, padding=1) 
+        self.conv5_2 = nn.Conv2d(512, 512, 3, padding=1) 
+        self.conv5_3 = nn.Conv2d(512, 512, 3, padding=1) 
+        self.conv5_4 = nn.Conv2d(512, 512, 3, padding=1) 
+        self.pool5 = nn.MaxPool2d(2,2)
+        self.relu = nn.ReLU(inplace=True)
+        self.classifier = nn.Linear(512,10)
+
+    def forward(self, x):
+        x = self.conv1_1(x)
+        x = self.relu(x)
+        x = self.conv1_2(x)
+        x = self.relu(x)
+        x = self.pool1(x)
+        x = self.conv2_1(x)
+        x = self.relu(x)
+        x = self.conv2_2(x)
+        x = self.relu(x)
+        x = self.pool2(x)
+        x = self.conv3_1(x)
+        x = self.relu(x)
+        x = self.conv3_2(x)
+        x = self.relu(x)
+        x = self.conv3_3(x)
+        x = self.relu(x)
+        x = self.conv3_4(x)
+        x = self.relu(x)
+        x = self.pool3(x)
+        x = self.conv4_1(x)
+        x = self.relu(x)
+        x = self.conv4_2(x)
+        x = self.relu(x)
+        x = self.conv4_3(x)
+        x = self.relu(x)
+        x = self.conv4_4(x)
+        x = self.relu(x)
+        x = self.pool4(x)
+        x = self.conv5_1(x)
+        x = self.relu(x)
+        x = self.conv5_2(x)
+        x = self.relu(x)
+        x = self.conv5_3(x)
+        x = self.relu(x)
+        x = self.conv5_4(x)
+        x = self.relu(x)
+        x = self.pool5(x)
+        x = x.view(-1, 512)
+        x = self.classifier(x)
+        return x
+</code></pre>
+<p>但是像上面这样的话，又太过繁琐，还有就是像pytorch官网的那样的，这里是链接<a href="https://github.com/pytorch/vision/blob/master/torchvision/models/vgg.py" target="_blank" rel="noopener">https://github.com/pytorch/vision/blob/master/torchvision/models/vgg.py</a></p>
+<pre><code class="py">class VGG(nn.Module):
+
+    def __init__(self, features, num_classes=1000, init_weights=True):
+        super(VGG, self).__init__()
+        self.features = features
+        self.classifier = nn.Sequential(
+            nn.Linear(512 * 7 * 7, 4096),
+            nn.ReLU(True),
+            nn.Dropout(),
+            nn.Linear(4096, 4096),
+            nn.ReLU(True),
+            nn.Dropout(),
+            nn.Linear(4096, num_classes),
+        )
+        if init_weights:
+            self._initialize_weights()
+
+    def forward(self, x):
+        x = self.features(x)
+        x = x.view(x.size(0), -1)
+        x = self.classifier(x)
+        return x
+
+    def _initialize_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
+                m.weight.data.normal_(0, math.sqrt(2. / n))
+                if m.bias is not None:
+                    m.bias.data.zero_()
+            elif isinstance(m, nn.BatchNorm2d):
+                m.weight.data.fill_(1)
+                m.bias.data.zero_()
+            elif isinstance(m, nn.Linear):
+                m.weight.data.normal_(0, 0.01)
+                m.bias.data.zero_()
+
+
+def make_layers(cfg, batch_norm=False):
+    layers = []
+    in_channels = 3
+    for v in cfg:
+        if v == &#39;M&#39;:
+            layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
+        else:
+            conv2d = nn.Conv2d(in_channels, v, kernel_size=3, padding=1)
+            if batch_norm:
+                layers += [conv2d, nn.BatchNorm2d(v), nn.ReLU(inplace=True)]
+            else:
+                layers += [conv2d, nn.ReLU(inplace=True)]
+            in_channels = v
+    return nn.Sequential(*layers)
+
+
+cfg = {
+    &#39;A&#39;: [64, &#39;M&#39;, 128, &#39;M&#39;, 256, 256, &#39;M&#39;, 512, 512, &#39;M&#39;, 512, 512, &#39;M&#39;],
+    &#39;B&#39;: [64, 64, &#39;M&#39;, 128, 128, &#39;M&#39;, 256, 256, &#39;M&#39;, 512, 512, &#39;M&#39;, 512, 512, &#39;M&#39;],
+    &#39;D&#39;: [64, 64, &#39;M&#39;, 128, 128, &#39;M&#39;, 256, 256, 256, &#39;M&#39;, 512, 512, 512, &#39;M&#39;, 512, 512, 512, &#39;M&#39;],
+    &#39;E&#39;: [64, 64, &#39;M&#39;, 128, 128, &#39;M&#39;, 256, 256, 256, 256, &#39;M&#39;, 512, 512, 512, 512, &#39;M&#39;, 512, 512, 512, 512, &#39;M&#39;],
+}
+def vgg19(pretrained=False, **kwargs):
+    &quot;&quot;&quot;VGG 19-layer model (configuration &quot;E&quot;)
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+    &quot;&quot;&quot;
+    if pretrained:
+        kwargs[&#39;init_weights&#39;] = False
+    model = VGG(make_layers(cfg[&#39;E&#39;]), **kwargs)
+    if pretrained:
+        model.load_state_dict(model_zoo.load_url(model_urls[&#39;vgg19&#39;]))
+    return model
+</code></pre>
+<h2 id="train"><a href="#train" class="headerlink" title="train"></a>train</h2><p>最后就是train了，这个也是都十分固定的，基本就是导入数据，定义优化方法和网络，然后开始按照epoch，最重要的是在循环中的关于loss的定义。</p>
+<pre><code class="py">import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from torch.autograd import Variable
+import net
+import loaddata
+
+dir = &#39;./VOCdevkit/VOC2012/JPEGImages/&#39;
+learning_rate = 0.1
+epoch = 1000
+use_cuda = torch.cuda.is_available()
+filenames = loaddata.getdir(0,10)
+loader = loaddata.dataloader(filenames,dir,5)
+print(&#39;load ok&#39;)
+colornet = net.ColorNet()
+if use_cuda:
+    colornet = colornet.cuda() 
+mes_loss = nn.MSELoss()
+optimizer = optim.Adam(colornet.parameters(),lr = learning_rate)
+for i in range(epoch):
+    for batch_idx,(inputs,targets,origin) in enumerate(loader):
+        if use_cuda:
+            inputs,targets = inputs.cuda(), targets.cuda()
+        optimizer.zero_grad()
+        inputs = Variable(inputs)
+        targets = Variable(targets)
+        outputs = colornet(inputs)
+        loss = mes_loss(outputs,targets) 
+        loss.backward()
+        optimizer.step()
+    if i%10 == 0:
+        print(str(i+1) + &#39; loss: &#39;+str(loss))
+</code></pre>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>有了这个模板之后，以后写起来就十分方便了。</p>
 
         
@@ -768,7 +982,7 @@ It will not impact the appearance and can give developers a lot of support :)
 
         <!--Copyright-->
         <div id="copyright">
-            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>LOOKCC
+            Copyright&nbsp;©&nbsp;2016&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>LOOKCC
             
         </div>
 
@@ -849,10 +1063,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
 
-    
-        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?Pki5+pzkluqu53g+ouMWpA==", true)</script>
-    
 
 
 <!-- Window Load -->
@@ -864,10 +1080,13 @@ It will not impact the appearance and can give developers a lot of support :)
     });
 
     
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
-        
-        
-        HanabiBrowser.start('pre code',true);
     
 </script>
 
