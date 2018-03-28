@@ -239,7 +239,7 @@
 
     
         <meta property="article:published_time" content="Wed Mar 28 2018 07:11:31 GMT+0800">
-        <meta property="article:modified_time" content="Thu Mar 29 2018 04:17:42 GMT+0800">
+        <meta property="article:modified_time" content="Thu Mar 29 2018 04:28:00 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -262,7 +262,7 @@
     "mainEntityOfPage": "http://yoursite.com/2018/03/28/Unity-AI-1/index.html",
     "headline": "Unity_AI_1",
     "datePublished": "Wed Mar 28 2018 07:11:31 GMT+0800",
-    "dateModified": "Thu Mar 29 2018 04:17:42 GMT+0800",
+    "dateModified": "Thu Mar 29 2018 04:28:00 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "LOOKCC",
@@ -500,7 +500,7 @@
 <li>一个简单的方法，有用的策略的标准是“乐观面对不确定性”，这里的方法是代理人开始于高的评分$V(a)$在每次选择动作的时候，之后贪婪（每次都选择高的）这将导致每个动作至少探索一次，但是这样的话加入对一个估值一次，得到的值很低，但是事实上它的真实值可能很高（因为只探索了一次，所以就不能代表真实）所以这种启发式的方法通常还不够，我们需要找到一个不经常使用但是估值很高的动作。</li>
 <li>另一个策略是在每个行为的估值上面加噪声，之后在这些带噪声的估值上面使用贪婪算法，采用这种方法，只要噪声小于真正的最佳方法和其他的方法的值的差值，最后将收敛到最佳值。</li>
 <li>我们还可以更进一步，将价值估计与概率关联。在这种情况下，如果每个行动的价值估计大致相等，那么我们会以相等的概率采取行动。另一方面，如果一个行动有更大的价值估计，那么我们会更频繁地选择它。通过这样做，我们会最后地消除了估值小的行为。我们上面的Demo用的就是这种方法</li>
-<li>（译者：这里再介绍一种方法，原文没有这种方法，不过和第三种类似）我们可以设置一个贪婪值$\epsilon$,这个值表示我们贪婪的概率，即我们以$\epsilon$的概率贪婪，以$(1-\epsilon)$的概率探索。这个$\epsilon$一般取0.9。<h2 id="继续前进"><a href="#继续前进" class="headerlink" title="继续前进"></a>继续前进</h2>（这里面都是像开头一样的客套话我就把大致意思翻译一下）<br>通过上面的博客和附带的代码，应该已经了解了强化学习，下面还有Q-Learning算法，结合深度神经网络的方法等等帮助你实现更加复杂的AI。以后还会支持tensorflow和pytorch框架（这里点个赞）。希望大家加入我们。</li>
+<li>（译者：这里再介绍一种方法，原文没有这种方法，不过和第三种类似）我们可以设置一个贪婪值$\epsilon$,这个值表示我们贪婪的概率，即我们以$\epsilon$的概率贪婪，以$(1-\epsilon)$的概率探索。这个$\epsilon$一般取0.9。<h2 id="继续前进"><a href="#继续前进" class="headerlink" title="继续前进"></a>继续前进</h2>（这里面都是像开头一样的客套话我就把大致意思翻译一下）<br>通过上面的博客和附带的代码，应该已经了解了强化学习，下面还有Q-Learning算法，结合深度神经网络的方法等等帮助你实现更加复杂的AI。以后还会支持tensorflow和pytorch框架（这里点个赞）。希望大家加入我们。 </li>
 </ul>
 
         
