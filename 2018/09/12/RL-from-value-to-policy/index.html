@@ -239,7 +239,7 @@
 
     
         <meta property="article:published_time" content="Wed Sep 12 2018 19:37:03 GMT+0800">
-        <meta property="article:modified_time" content="Fri Sep 14 2018 11:33:04 GMT+0800">
+        <meta property="article:modified_time" content="Fri Sep 14 2018 11:37:13 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -262,7 +262,7 @@
     "mainEntityOfPage": "http://yoursite.com/2018/09/12/RL-from-value-to-policy/index.html",
     "headline": "RL:from value to policy",
     "datePublished": "Wed Sep 12 2018 19:37:03 GMT+0800",
-    "dateModified": "Fri Sep 14 2018 11:33:04 GMT+0800",
+    "dateModified": "Fri Sep 14 2018 11:37:13 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "LOOKCC",
@@ -508,7 +508,7 @@
 <h2 id="Value-Based"><a href="#Value-Based" class="headerlink" title="Value-Based"></a>Value-Based</h2><p>下面正式进入正题,是关于value-based的方法,也就是基于价值的强化学习算法,这部分算法是以一个Q值来衡量好坏,也就是对一个State下的所有的Action拿到Q值,然后根据Q值来进行衡量使用哪个Action.因为要维护一个Q值的表,所以只适合少量的并且是离散的情况.典型的算法有Sarsa,Q-Learning,DQN等等.后面会详细叙述.</p>
 <h2 id="Policy-Based"><a href="#Policy-Based" class="headerlink" title="Policy-Based"></a>Policy-Based</h2><p>这个基于策略的方法是直接根据State得到Action,也就是我们直接根据策略选择Action,而不是Q值.基于策略的适合高维连续,适用性更加广泛一些.</p>
 <h2 id="经典算法"><a href="#经典算法" class="headerlink" title="经典算法"></a>经典算法</h2><h3 id="Sarsa-and-Q-Learning"><a href="#Sarsa-and-Q-Learning" class="headerlink" title="Sarsa and Q-Learning"></a>Sarsa and Q-Learning</h3><p>这里就涉及到了前面的on-Policy和off-Policy了,前面没有例子,不好解释,这里刚好拿这两个算法来举例子,其中Sarsa为on-Policy的,而Q-Learning刚好为off-Policy的.下面贴一张在stackoverflow上面的图,问题的链接在<a href="https://stackoverflow.com/questions/6848828/what-is-the-difference-between-q-learning-and-sarsa/41420616" target="_blank" rel="noopener">这里</a>,<br><img src="/2018/09/12/RL-from-value-to-policy/stackoverflow.png" alt=""><br>从这张图可以看出,采用的方法就是初始化状态和策略,也就是我们的Q值表,即这里所谓的策略,就是我们根据Q值表进行选择相应Action.然后不断地根据reward更新我们的Q值.而他们的区别就在更新Q值的时候使用的是和前面拿到Action一样的策略,还是用的另一个策略,从上面的图中就可以看到,Sarsa的里面更新Q用的是和上面一样的策略,但是Q-Learning则不同,这里用的是Q表中在这个状态的采取所有行动最大的Q值.</p>
-<h3 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h3><p>当问题变的复杂的时候,Q-Learning就会有一个问题,那就是这个Q表会变得非常复杂,因为这个表相当于是一个S<em>A的表,会变得十分的庞大,当遇到连续的问题的时候,就会变得复杂到没有办法解决,就需要的到策略梯度了,不过这个是后面的东西,当面对复杂的离散问题的时候,比如围棋这种,我们就可以使用DQN来解决,DQN,从名字就应该知道使用了深度学习的东西,具体的话,其实就是将Q表使用神经网络来替换,也就是我们输入S和A,输出Q值,就可以了.原理就是这么简单.<br><em>*(tips: 我们在这里面并不是像cv那样很强调网络的结构,这里一般都是很简单的几层的网络,因为网络在RL里面的作用是map一个函数,所以这里和后面的介绍中,都不会介绍具体的网络结构,如果需要的话可以查看相关的论文和实现.)</em></em><br>理解起来简单,但是在实现中,还是会有一些问题,比如前面我们是直接进行更新Q值的,但是现在不一样了,我们现在是神经网络,需要有loss函数,等等.我们先来看一下这个loss如何定义.回过头看Q-Learning的Q值的更新方式.  </p>
+<h3 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h3><p>当问题变的复杂的时候,Q-Learning就会有一个问题,那就是这个Q表会变得非常复杂,因为这个表相当于是一个$S<em>A$的表,会变得十分的庞大,当遇到连续的问题的时候,就会变得复杂到没有办法解决,就需要的到策略梯度了,不过这个是后面的东西,当面对复杂的离散问题的时候,比如围棋这种,我们就可以使用DQN来解决,DQN,从名字就应该知道使用了深度学习的东西,具体的话,其实就是将Q表使用神经网络来替换,也就是我们输入S和A,输出Q值,就可以了.原理就是这么简单.<br><em>*(tips: 我们在这里面并不是像cv那样很强调网络的结构,这里一般都是很简单的几层的网络,因为网络在RL里面的作用是map一个函数,所以这里和后面的介绍中,都不会介绍具体的网络结构,如果需要的话可以查看相关的论文和实现.)</em></em><br>理解起来简单,但是在实现中,还是会有一些问题,比如前面我们是直接进行更新Q值的,但是现在不一样了,我们现在是神经网络,需要有loss函数,等等.我们先来看一下这个loss如何定义.回过头看Q-Learning的Q值的更新方式.  </p>
 <p>$$Q^*(s,a)=Q(s,a)+ \alpha(r+\gamma \max<em>{a’}Q(s’,a’)-Q(s,a))$$<br>这个公式的意思就是新的Q值等于原来的Q加上$\alpha$倍的(回报r,加上下一个状态的最大的Q值,减去原来的Q值),在思考一下,其实就是将我们的Q值,向$r+\gamma \max</em>{a’}Q(s’,a’)$迈进$\alpha$.根据这个理论,我们就可以很容易的得到DQN的loss的计算方式,也就是下面的.  </p>
 <p>$$L(\theta)= E[(TargetQ-Q(s,a;\theta)^2)]$$<br>$$TargetQ =r+\gamma \max_{a’}Q(s’,a’;\theta)$$<br>和上面的一样,都是要输出的Q值去接近target.<br>现在我们已经解决了关于loss的问题,显然DQN也是一个off-policy的方法,那么我们就可以在本地学习$&lt;s,a,r,a’&gt;$这样的数据集了,也就是我们有我们的memery池了.<br>最后还有一个问题,什么问题呢?在训练的时候DQN十分的不稳定,原因很简单,因为我们在target里面用的Q和Loss里面的Q是同一个Q,想象一下,某些参赛选手当裁判,那裁判的判定标准肯定是根据他自己在哪方面擅长而变化,评判的标准就变得很不稳定.解决这个问题的方法也很简单,只需要再加一个网络就可以了,并且在训练的时候,隔很多步再把其中一个网络的参数同步过去,这样就保证了在很多步内是稳定的.<br>DQN的部分就到这里结束了,同时也应该看到DQN也存在很多的问题,首先就是最大的问题,连续值,也就是当Action并不是离散的时候,是没有办法用的,同样的,更大的问题规模同样可以使DQN不起作用.解决这个问题的办法就是下面要讲的PG.</p>
 <h3 id="Policy-Gradients"><a href="#Policy-Gradients" class="headerlink" title="Policy Gradients"></a>Policy Gradients</h3><p>PG的思想其实很简单,回忆前面的DQN,其中神经网络的作用是输入状态S和行为A,之后得到的是Q值,之后根据Q值来决定行为,那我们为什么我们不直接将S输入,得到A呢?根据S选择A,这本质就是一个策略,而这个深经网络可以使用梯度下降来进行优化,所以的得名PG.(这里不是直接输出A,而是A的一个概率分布)和上面同样的道理,我们要设计我们的Loss函数,还有梯度的计算.我们这里需要先明确一个目标,我们的策略的终极目标是使我们最后拿到的回报的期望最大,这里我们可以先拿$f(x)$表示成最终的目标,那么我们对它的期望求梯度,就变成了这个样子$\nabla_\theta E[f(x)]$,接下来可以看下面的推到了<br><img src="/2018/09/12/RL-from-value-to-policy/PG.png" alt=""><br>这里面比较难理解的是倒数第二行这里的推到,这里看后面的注释就很容易理解了,将其中的$z$换成$p(x)$再把公式倒过来,就成了倒数第三行到倒数第二行的情况了.这样我们就得到了策略梯度的推到过程,再将其中的一些符号使用我们在强化学习中常用的符号代替,就得到了下面的公式  </p>
@@ -520,7 +520,8 @@
 <p>$$\nabla<em>\theta J(\pi)=E</em>{s\sim\rho,a\sim\pi(s)}[A(s,a) \cdot\nabla_\theta \log\pi(a|s)]$$<br>这里也是求和除以N,是求期望,然后就像A-C里面那样,使用Q来代替A,后面就是梯度.是一样的.最后再看更新方式,这里使用了DQN的双网络的方法,不过不是隔几步参数平移过去,是每次都靠近一点.</p>
 <h3 id="A3C"><a href="#A3C" class="headerlink" title="A3C"></a>A3C</h3><p>A3C就是3个A-C,因为A-C会出现一些问题,最重要的问题就是关于相关性的,在一次的迭代当中s的相关性会比较高,这个时候需需要解决这个问题,我们可以使用并行来解决这个问题,也就是我们可以同时进行三个A-C,然后同时学习,这样效率提高了,相关性的问题也解决了.(PS:详细的我还没看,只是讲了大概的原理,这里先占个坑)</p>
 <h3 id="PPO"><a href="#PPO" class="headerlink" title="PPO"></a>PPO</h3><p>(PS:同上,先占个坑)<br>PPO解决的是优化不长的问题,步长大了会不稳定,步长小了又太慢.所以他们想到使用一个公式来限制步长  </p>
-<p>$$L^{CLIP(\theta)}=\hat{E_t}[min(r_t(\theta)\hat{A_t},clip(r_t(\theta),1-\epsilon,1+\epsilon)\hat{A_t}) ]$$<br>其中$r<em>t(\theta)=\frac{\pi</em>\theta(a_t|s<em>t)}{\pi</em>{\theta_old}(a_t|s_t)}$<br>也就是将更新的比值限制在了$(1-\epsilon,1+\epsilon)$,通过这个方式来保证相对合理的步长.</p>
+<p>$$L^{CLIP(\theta)}=\hat{E_t}[min(r_t(\theta)\hat{A_t},clip(r_t(\theta),1-\epsilon,1+\epsilon)\hat{A_t}) ]$$<br>其中 </p>
+<p>$$r<em>t(\theta)=\frac{\pi</em>\theta(a_t|s<em>t)}{\pi</em>{\theta_old}(a_t|s_t)}$$<br>也就是将更新的比值限制在了$(1-\epsilon,1+\epsilon)$,通过这个方式来保证相对合理的步长.</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次的博客总结了很长时间,其中的公式都是手打的,真的是太难受了.不过收获还是很大的,算是从value和policy的角度理清了RL的一个脉络.还有就是一直看CV的东西,好久没有看过这么复杂的公式了,也算是提高一下数学能力吧.</p>
 
         
