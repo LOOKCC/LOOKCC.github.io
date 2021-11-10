@@ -4,7 +4,7 @@ title:      Just for test
 subtitle:   Just for test
 date:       2021-11-10
 author:     Wang Zhihao
-header-img: /img/post-bg-coffee.jpg
+header-img: img/post-bg-coffee.jpeg
 catalog: true
 tags:
     - test
